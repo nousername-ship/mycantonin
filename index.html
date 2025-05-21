@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <title>Canton</title>
+  <style>
+    body {
+      background-color: #4CAF50;
+      font-family: Arial, sans-serif;
+      color: white;
+      text-align: center;
+      padding: 40px;
+    }
+    h1 {
+      font-size: 48px;
+      margin-bottom: 10px;
+    }
+    p {
+      font-size: 20px;
+      margin-bottom: 20px;
+    }
+    input, button {
+      padding: 10px;
+      font-size: 18px;
+      width: 60%;
+      margin: 10px auto;
+      display: block;
+      border: none;
+      border-radius: 5px;
+    }
+    button {
+      background-color: white;
+      color: #4CAF50;
+      cursor: pointer;
+      font-weight: bold;
+    }
+    .section {
+      background-color: rgba(255,255,255,0.1);
+      margin: 30px auto;
+      padding: 20px;
+      border-radius: 15px;
+      width: 80%;
+    }
+    .category {
+      margin: 20px auto;
+      padding: 15px;
+      border-radius: 10px;
+      width: 90%;
+      text-align: left;
+      background-color: rgba(255,255,255,0.05);
+    }
+    .category h3 {
+      border-bottom: 1px solid white;
+      padding-bottom: 5px;
+    }
+  </style>
+</head>
+<body>
+  <h1>Canton</h1>
+  <p>Напишите сюда свои продукты, а мы их отсортируем и кластеризуем</p>
+  <input type="text" id="productInput" placeholder="Например: молоко, пельмени, яблоко">
+  <button onclick="sortAndCluster()">Сортировать и кластеризовать</button>
+  <div id="results"></div>
+
+  <script>
+    function sortAndCluster() {
+      const input = document.getElementById("productInput").value.toLowerCase();
+      const items = input.split(',').map(i => i.trim()).filter(i => i.length > 0);
+
+      const categoriesList = {
+        "Молочное": ["молоко", "сыр", "кефир", "йогурт", "сметана", "творог", "масло", "ряженка"],
+        "Мясное": ["мясо", "курица", "говядина", "свинина", "колбаса", "баранина", "ветчина", "фрикадельки", "сосиски", "бекон"],
+        "Напитки": ["сок", "вода", "чай", "кофе", "газировка", "лимонад", "морс", "какао", "энергетик", "компот"],
+        "Овощи и фрукты": ["яблоко", "банан", "картошка", "морковь", "огурец", "помидор", "капуста", "лук", "чеснок", "апельсин", "груша", "виноград", "перец", "редис"],
+        "Снеки и хлеб": ["чипсы", "печенье", "булка", "хлеб", "сухарики", "крекер", "баранки", "лаваш"],
+        "Крупы и каши": ["рис", "гречка", "овсянка", "перловка", "манка", "кукуруза", "макароны", "спагетти"],
+        "Сладкое и десерты": ["шоколад", "конфеты", "мёд", "вафли", "торт", "мороженое", "зефир", "мармелад", "пряники", "джем"],
+        "Замороженные продукты": ["пельмени", "замороженные овощи", "пицца", "рыба замороженная", "наггетсы", "котлеты", "блинчики", "вареники"]
+      };
+
+      const categoryNames = Object.keys(categoriesList);
+
+      // Ручная категоризация
+      const manualCategories = {};
+      categoryNames.forEach(cat => manualCategories[cat] = []);
+      manualCategories["Другое"] = [];
+
+      items.forEach(item => {
+        let found = false;
+        for (let cat of categoryNames) {
+          if (categoriesList[cat].includes(item)) {
+            manualCategories[cat].push(item);
+            found = true;
+            break;
+          }
+        }
+        if (!found) manualCategories["Другое"].push(item);
+      });
+
+      // Простая "кластеризация": разбиваем на 3 случайных кластера
+      let clusters = [[], [], []];
+      items.forEach((item, i) => {
+        const clusterIndex = i % 3;
+        clusters[clusterIndex].push(item);
+      });
+
+      // Отображение
+      let html = <div class="section"><h2>Категоризация по типам:</h2>;
+      for (let cat in manualCategories) {
+        html += <div class="category"><h3>${cat}:</h3><p>${manualCategories[cat].join(', ') || 'Ничего'}</p></div>;
+      }
+      html += </div>;
+
+      html += <div class="section"><h2>Кластеризация (примитивная):</h2>;
+      clusters.forEach((items, i) => {
+        html += `<div class="category"><h3>Кластер ${i + 1}:</h3><p>${items.join(', ') ||
+
+```html
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <title>Canton</title>
+  <style>
+    body {
+      background-color: #4CAF50;
+      font-family: Arial, sans-serif;
+      color: white;
+      text-align: center;
+      padding: 40px;
+    }
+    h1 {
+      font-size: 48px;
+      margin-bottom: 10px;
+    }
+    p {
+      font-size: 20px;
+      margin-bottom: 20px;
+    }
+    input, button {
+      padding: 10px;
+      font-size: 18px;
+      width: 60%;
+      margin: 10px auto;
+      display: block;
+      border: none;
+      border-radius: 5px;
+    }
+    button {
+      background-color: white;
+      color: #4CAF50;
+      cursor: pointer;
+      font-weight: bold;
+    }
+    .section {
+      background-color: rgba(255,255,255,0.1);
+      margin: 30px auto;
+      padding: 20px;
+      border-radius: 15px;
+      width: 80%;
+    }
+    .category {
+      margin: 20px auto;
+      padding: 15px;
+      border-radius: 10px;
+      width: 90%;
+      text-align: left;
+      background-color: rgba(255,255,255,0.05);
+    }
+    .category h3 {
+      border-bottom: 1px solid white;
+      padding-bottom: 5px;
+    }
+  </style>
+</head>
+<body>
+  <h1>Canton</h1>
+  <p>Напишите сюда свои продукты, а мы их отсортируем и кластеризуем</p>
+  <input type="text" id="productInput" placeholder="Например: молоко, пельмени, яблоко">
+  <button onclick="sortAndCluster()">Сортировать и кластеризовать</button>
+  <div id="results"></div>
+
+  <script>
+    function sortAndCluster() {
+      const input = document.getElementById("productInput").value.toLowerCase();
+      const items = input.split(',').map(i => i.trim()).filter(i => i.length > 0);
+
+      const categoriesList = {
+        "Молочное": ["молоко", "сыр", "кефир", "йогурт", "сметана", "творог", "масло", "ряженка"],
+        "Мясное": ["мясо", "курица", "говядина", "свинина", "колбаса", "баранина", "ветчина", "фрикадельки", "сосиски", "бекон"],
+        "Напитки": ["сок", "вода", "чай", "кофе", "газировка", "лимонад", "морс", "какао", "энергетик", "компот"],
+        "Овощи и фрукты": ["яблоко", "банан", "картошка", "морковь", "огурец", "помидор", "капуста", "лук", "чеснок", "апельсин", "груша", "виноград", "перец", "редис"],
+        "Снеки и хлеб": ["чипсы", "печенье", "булка", "хлеб", "сухарики", "крекер", "баранки", "лаваш"],
+        "Крупы и каши": ["рис", "гречка", "овсянка", "перловка", "манка", "кукуруза", "макароны", "спагетти"],
+        "Сладкое и десерты": ["шоколад", "конфеты", "мёд", "вафли", "торт", "мороженое", "зефир", "мармелад", "пряники", "джем"],
+        "Замороженные продукты": ["пельмени", "замороженные овощи", "пицца", "рыба замороженная", "наггетсы", "котлеты", "блинчики", "вареники"]
+      };
+
+      const categoryNames = Object.keys(categoriesList);
+
+      const manualCategories = {};
+      categoryNames.forEach(cat => manualCategories[cat] = []);
+      manualCategories["Другое"] = [];
+
+      items.forEach(item => {
+        let found = false;
+        for (let cat of categoryNames) {
+          if (categoriesList[cat].includes(item)) {
+            manualCategories[cat].push(item);
+            found = true;
+            break;
+          }
+        }
+        if (!found) manualCategories["Другое"].push(item);
+      });
+
+      let clusters = [[], [], []];
+      items.forEach((item, i) => {
+        const clusterIndex = i % 3;
+        clusters[clusterIndex].push(item);
+      });
+
+      let html = <div class="section"><h2>Категоризация по типам:</h2>;
+      for (let cat in manualCategories) {
+        html += <div class="category"><h3>${cat}:</h3><p>${manualCategories[cat].join(', ') || 'Ничего'}</p></div>;
+      }
+      html += </div>;
+
+      html += <div class="section"><h2>Кластеризация:</h2>;
+      clusters.forEach((group, i) => {
+        html += <div class="category"><h3>Кластер ${i + 1}:</h3><p>${group.join(', ') || 'Пусто'}</p></div>;
+      });
+      html += </div>;
+
+      document.getElementById("results").innerHTML = html;
+    }
+  </script>
+</body>
+</html>
